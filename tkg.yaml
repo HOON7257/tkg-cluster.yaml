@@ -1,0 +1,30 @@
+apiVersion: run.tanzu.vmware.com/v1alpha2
+kind: TanzuKubernetesCluster
+metadata:
+  name: tkgs
+  namespace: youklee
+spec:
+  topology:
+    controlPlane:
+      replicas: 1
+      vmClass: best-effort-small
+      storageClass: tanzu
+      tkr:
+        reference:
+          name: v1.23.8---vmware.3-tkg.1
+    nodePools:
+    - name: tkg-cluster-nodeool-1
+      replicas: 3
+      vmClass: best-effort-medium
+      storageClass: tanzu
+      tkr:
+        reference:
+          name: v1.23.8---vmware.3-tkg.1
+  settings:
+    network:
+      pods:
+        cidrBlocks:
+        - 100.96.0.0/11
+      services:
+        cidrBlocks:
+        - 100.64.0.0/13
